@@ -57,5 +57,30 @@ namespace Staffing.Application.WebApi.Areas.Employee
                 throw;
             }
         }
+
+        [HttpPost]
+        public IActionResult UpdateEmployee([FromBody] MvEmployeeUpdate employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var updated = _employeeService.UpdateEmployee(employee);
+                if (!updated)
+                {
+                    return BadRequest();
+                }
+                return Ok();
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

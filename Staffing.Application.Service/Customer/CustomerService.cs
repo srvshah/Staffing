@@ -62,7 +62,29 @@ namespace Staffing.Application.Service.Customer
             var jsonNew = JsonConvert.SerializeObject(customer);
             using (var conn = _dah.GetConnection())
             {
-                using (var cmd = new SqlCommand("SpOrganizationDetailTsk", conn))
+                using (var cmd = new SqlCommand("SpCustomerInsertTsk", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@Json", SqlDbType.NChar).Value = jsonNew;
+                    cmd.CommandTimeout = int.Parse(_commandTimeout);
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+
+                }
+
+            }
+        }
+
+        public bool UpdateCustomer(MvCustomerUpdate customer)
+        {
+            var jsonNew = JsonConvert.SerializeObject(customer);
+            using (var conn = _dah.GetConnection())
+            {
+                using (var cmd = new SqlCommand("SpOrganizationUpdateTsk", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@Json", SqlDbType.NChar).Value = jsonNew;

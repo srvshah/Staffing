@@ -21,4 +21,14 @@ namespace Staffing.Application.Model.Customer
 
         public int? phone { get; set; }
     }
+
+    public class MvCustomerUpdate
+    {
+        public int organizationId { get; set; }
+        public string name { get; set; }
+        public string detail { get; set; }
+        public string address { get; set; }
+        public int mobile { get; set; }
+        public int? phone { get; set; }
+    }
 }

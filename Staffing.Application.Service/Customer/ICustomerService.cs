@@ -9,5 +9,6 @@ namespace Staffing.Application.Service.Customer
     {
         dynamic GetAllCustomers();
         bool AddCustomer(MvCustomer customer);
+        bool UpdateCustomer(MvCustomerUpdate customer);
     }
 }

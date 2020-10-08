@@ -63,7 +63,29 @@ namespace Staffing.Application.Service.Employee
             var jsonNew = JsonConvert.SerializeObject(employee);
             using (var conn = _dah.GetConnection())
             {
-                using (var cmd = new SqlCommand("SpPersonDetailTsk", conn))
+                using (var cmd = new SqlCommand("SpEmployeeInsertTsk", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@Json", SqlDbType.NChar).Value = jsonNew;
+                    cmd.CommandTimeout = int.Parse(_commandTimeout);
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+
+                }
+
+            }
+        }
+
+        public bool UpdateEmployee(MvEmployeeUpdate employee)
+        {
+            var jsonNew = JsonConvert.SerializeObject(employee);
+            using (var conn = _dah.GetConnection())
+            {
+                using (var cmd = new SqlCommand("SpPersonUpdateTsk", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@Json", SqlDbType.NChar).Value = jsonNew;

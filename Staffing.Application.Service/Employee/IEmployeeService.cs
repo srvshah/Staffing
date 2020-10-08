@@ -9,5 +9,6 @@ namespace Staffing.Application.Service.Employee
     {
         dynamic GetAllEmployees();
         bool AddEmployee(MvEmployee employee);
+        bool UpdateEmployee(MvEmployeeUpdate employee);
     }
 }
