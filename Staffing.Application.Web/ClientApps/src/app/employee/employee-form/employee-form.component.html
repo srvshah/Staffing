@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>{{action}} employee</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]='empForm'>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="FirstName*" 
+            formControlName='firstName' [(ngModel)]="employee.firstName">
+        </mat-form-field>
+        
+        <br>
+        <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="MiddleName" formControlName='middleName' [(ngModel)]="employee.middleName" >
+        </mat-form-field>
+    
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="LastName*" formControlName='lastName' [(ngModel)]="employee.lastName" >
+        </mat-form-field>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Username" formControlName='username' [(ngModel)]="employee.username">
+        </mat-form-field>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="password" placeholder="Password" formControlName='password' [(ngModel)]="employee.password">
+        </mat-form-field>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Address*" formControlName='address' [(ngModel)]="employee.address">
+        </mat-form-field>
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Mobile*" formControlName='mobile' [(ngModel)]="employee.mobile">
+        </mat-form-field>
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Phone" formControlName='phone' [(ngModel)]="employee.phone">
+        </mat-form-field>
+
+
+    </form>
+   
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)='cancelClick()'>Cancel</button>
+    <button mat-button (click)='submitForm()' [disabled]='!empForm.valid'>{{action}}</button>
+</div>

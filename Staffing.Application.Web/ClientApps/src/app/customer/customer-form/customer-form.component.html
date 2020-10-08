@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>{{action}} customer</h1>
+
+<div mat-dialog-content>
+    <form [formGroup]='custForm'>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Name*" 
+            formControlName='name' [(ngModel)]="customer.name">
+        </mat-form-field>
+        
+        <br>
+        <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Detail*" formControlName='detail' [(ngModel)]="customer.detail" >
+        </mat-form-field>
+    
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Address*" formControlName='address' [(ngModel)]="customer.address" >
+        </mat-form-field>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Mobile*" formControlName='mobile' [(ngModel)]="customer.mobile">
+        </mat-form-field>
+
+        <mat-form-field  class="full-width">
+            <input matInput type="text" placeholder="Phone" formControlName='phone' [(ngModel)]="customer.phone">
+        </mat-form-field>
+
+
+    </form>
+   
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)='cancelClick()'>Cancel</button>
+    <button mat-button (click)='submitForm()' [disabled]='!custForm.valid'>{{action}}</button>
+</div>
