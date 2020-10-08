@@ -1,0 +1,50 @@
+<button mat-raised-button  style="margin-right: 5px;">Create</button>
+<button mat-raised-button >Edit</button>
+<br>
+<br>
+
+<table mat-table [dataSource]='dataSource' class="mat-elevation-z8" width="100%">
+   
+    <ng-container matColumnDef="transactionId">
+        <th mat-header-cell *matHeaderCellDef> Transaction Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.transactionId}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="assignmentId">
+        <th mat-header-cell *matHeaderCellDef> Assignment Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.assignmentId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rate">
+        <th mat-header-cell *matHeaderCellDef> Rate </th>
+        <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="customerName">
+        <th mat-header-cell *matHeaderCellDef> Customer </th>
+        <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef> Employee</th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount</th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hoursWorked">
+        <th mat-header-cell *matHeaderCellDef> HoursWorked</th>
+        <td mat-cell *matCellDef="let element"> {{element.hoursWorked}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr (click)='onRowClicked(row)' mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
+
+</table>
+<span *ngIf="userMsg" style="color: red;font-size: medium;font-weight: bold;">No Records!</span>
+
