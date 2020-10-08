@@ -24,7 +24,9 @@ namespace Staffing.Application.Model.Customer
 
     public class MvCustomerUpdate
     {
+        [Required]
         public int organizationId { get; set; }
+
         public string name { get; set; }
         public string detail { get; set; }
         public string address { get; set; }

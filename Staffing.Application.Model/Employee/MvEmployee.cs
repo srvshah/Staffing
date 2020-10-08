@@ -31,7 +31,9 @@ namespace Staffing.Application.Model.Employee
 
     public class MvEmployeeUpdate
     {
+        [Required]
         public int personId { get; set; }
+
         public string firstName { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }

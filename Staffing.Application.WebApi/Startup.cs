@@ -11,8 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Staffing.Application.Service.Account;
+using Staffing.Application.Service.Assignment;
 using Staffing.Application.Service.Customer;
 using Staffing.Application.Service.Employee;
+using Staffing.Application.Service.Invoice;
+using Staffing.Application.Service.Job;
+using Staffing.Application.Service.Transaction;
 
 namespace Staffing.Application.WebApi
 {
@@ -43,6 +47,10 @@ namespace Staffing.Application.WebApi
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<ICustomerService, CustomerService>();
+            services.AddTransient<IJobService, JobService>();
+            services.AddTransient<IAssignmentService, AssignmentService>();
+            services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<IInvoiceService, InvoiceService>();
             services.AddControllers().AddNewtonsoftJson();
         }
 
