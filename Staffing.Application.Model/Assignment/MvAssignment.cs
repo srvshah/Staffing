@@ -24,5 +24,7 @@ namespace Staffing.Application.Model.Assignment
         public int employeeId { get; set; }
 
         public bool status { get; set; }
+
+        public int hoursWorked { get; set; }
     }
 }

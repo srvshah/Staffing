@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Staffing.Application.Model.Transaction;
 using Staffing.Application.Service.Transaction;
 using Staffing.Application.WebApi.Areas.Base;
 using System;
@@ -28,6 +29,31 @@ namespace Staffing.Application.WebApi.Areas.Transaction
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AddTransaction([FromBody] IEnumerable<MvTransactionAdd> assignments)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var added = _transactionService.AddTransaction(assignments);
+                if (!added)
+                {
+                    return BadRequest();
+                }
+                return Ok();
+
+
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

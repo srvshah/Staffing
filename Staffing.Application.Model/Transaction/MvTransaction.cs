@@ -10,4 +10,10 @@ namespace Staffing.Application.Model.Transaction
         [Required]
         public int transactionId { get; set; }
     }
+
+    public class MvTransactionAdd
+    {
+        [Required]
+        public int assignmentId { get; set; }
+    }
 }

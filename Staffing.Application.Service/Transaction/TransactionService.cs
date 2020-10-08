@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Staffing.Application.DataAccess;
+using Staffing.Application.Model.Transaction;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -52,6 +54,28 @@ namespace Staffing.Application.Service.Transaction
                         }
                     }
                 }
+            }
+        }
+
+        public bool AddTransaction(IEnumerable<MvTransactionAdd> assignments)
+        {
+            var jsonNew = JsonConvert.SerializeObject(assignments);
+            using (var conn = _dah.GetConnection())
+            {
+                using (var cmd = new SqlCommand("SpTransactionIns", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@Json", SqlDbType.NChar).Value = jsonNew;
+                    cmd.CommandTimeout = int.Parse(_commandTimeout);
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+
+                }
+
             }
         }
     }
