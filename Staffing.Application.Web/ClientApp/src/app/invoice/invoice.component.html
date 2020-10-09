@@ -1,0 +1,40 @@
+
+<button mat-raised-button (click)="getInvoiceDetail()">Invoice Detail</button> 
+<br>
+<br>
+
+<table mat-table [dataSource]='dataSource' class="mat-elevation-z8" width="100%">
+   
+
+    <ng-container matColumnDef="invoiceId">
+        <th mat-header-cell *matHeaderCellDef> Invoice Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.invoiceId}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="invoiceNumber">
+        <th mat-header-cell *matHeaderCellDef> Invoice Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </td>
+    </ng-container>
+    <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="customerName">
+        <th mat-header-cell *matHeaderCellDef> Customer </th>
+        <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="employeeName">
+        <th mat-header-cell *matHeaderCellDef> Employee</th>
+        <td mat-cell *matCellDef="let element"> {{element.employeeName}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr (click)='onRowClicked(row)' mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
+
+</table>
+<span *ngIf="userMsg" style="color: red;font-size: medium;font-weight: bold;">{{userMsg}}</span>
+

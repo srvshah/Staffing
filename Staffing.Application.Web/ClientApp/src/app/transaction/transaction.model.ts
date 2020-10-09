@@ -6,4 +6,6 @@ export interface MvTransaction{
     amount: number;
     employeeName: string;
     customerName: string;
+    customerId: number;
+    employeeId: number;
 }

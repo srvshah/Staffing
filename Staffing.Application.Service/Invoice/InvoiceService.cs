@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Staffing.Application.DataAccess;
+using Staffing.Application.Model.Invoice;
 using Staffing.Application.Model.Transaction;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,36 @@ namespace Staffing.Application.Service.Invoice
 
                 }
 
+            }
+        }
+
+        public dynamic GetInvoiceDetail(MvInvoice invoice)
+        {
+            var jsonNew = JsonConvert.SerializeObject(invoice);
+            using (var conn = _dah.GetConnection())
+            {
+                using (var cmd = new SqlCommand("SpInvoiceDetailSel", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@Json", SqlDbType.NChar).Value = jsonNew;
+                    cmd.CommandTimeout = int.Parse(_commandTimeout);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        try
+                        {
+                            if (reader.HasRows)
+                            {
+                                return _dah.GetJson(reader);
+                            }
+                            return null;
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw ex;
+                        }
+                    }
+                }
             }
         }
     }

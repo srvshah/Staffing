@@ -32,6 +32,7 @@ export class EmployeeComponent implements OnInit {
     this.es.getEmployees().subscribe(res => {
       if (res && res.data){
         this.dataSource = res.data;
+        this.userMsg = null;
       } else {
         this.dataSource = [];
         this.userMsg = 'No data';
@@ -40,9 +41,13 @@ export class EmployeeComponent implements OnInit {
   }
 
   addEmployee(): void{
+    this.clearSelection();
+    this.openDialog('Add');
+  }
+
+  clearSelection(): void{
     this.selection.clear();
     this.selectedEmployee = {} as MvEmployee;
-    this.openDialog('Add');
   }
 
   editEmployee(): void{
@@ -77,6 +82,7 @@ export class EmployeeComponent implements OnInit {
           }, err => console.log(err));
         }
       }
+      this.clearSelection();
     });
   }
 

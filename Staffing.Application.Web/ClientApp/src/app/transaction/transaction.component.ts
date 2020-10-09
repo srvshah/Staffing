@@ -4,6 +4,7 @@ import { MvTransaction } from './transaction.model';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/core/services/utility.service';
 import { MatDialog } from '@angular/material/dialog';
+import { InvoiceService } from '../invoice/invoice.service';
 
 @Component({
   selector: 'zen-transaction',
@@ -14,16 +15,18 @@ export class TransactionComponent implements OnInit {
   userMsg: string = null;
   displayedColumns: string[];
   dataSource: MvTransaction[] = [];
-  selectedJob: MvTransaction = {} as MvTransaction;
+  selectedTransaction: MvTransaction = {} as MvTransaction;
   selection = new SelectionModel<MvTransaction>(false, []);
+  selectionCheckBox = new SelectionModel<MvTransaction>(true, []);
   constructor(
     private ts: TransactionService,
     private us: UtilityService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private is: InvoiceService
     ) { }
 
   ngOnInit(): void {
-    this.displayedColumns = ['transactionId', 'assignmentId', 'employeeName', 'hoursWorked', 'customerName', 'rate', 'amount'];
+    this.displayedColumns = ['select', 'transactionId', 'assignmentId', 'employeeName', 'hoursWorked', 'customerName', 'rate', 'amount'];
     this.getTransactions();
   }
 
@@ -31,6 +34,7 @@ export class TransactionComponent implements OnInit {
     this.ts.getTransactions().subscribe(res => {
       if (res && res.data){
         this.dataSource = res.data;
+        this.userMsg = null;
       } else {
         this.dataSource = [];
         this.userMsg = 'No data';
@@ -38,50 +42,61 @@ export class TransactionComponent implements OnInit {
     }, err => console.log(err));
   }
 
-  // addTransaction(): void{
-  //   this.selection.clear();
-  //   this.selectedJob = {} as MvJob;
-  //   this.openDialog('Add');
-  // }
+  generateInvoice(): void{
+    if (!this.selectionCheckBox.hasValue()){
+      this.us.openSnackBar('Select transaction to generate invoice', 'warning');
+    }
+    else {
+      if (!this.hasSameCustomer(this.selectionCheckBox.selected) && !this.hasSameEmployee(this.selectionCheckBox.selected)){
+        this.us.openSnackBar('Select transactions on a common customer or employee', 'warning');
+      }
+      else {
+        this.is.addInvoice(this.selectionCheckBox.selected).subscribe(res => {
+          this.us.openSnackBar('Invoice Generated', 'success');
+          this.clearSelection();
+        }, err => console.log(err));
+      }
+    }
+  }
 
-  // editJob(): void{
-  //   this.openDialog('Edit');
-  // }
+  clearSelection(): void{
+    this.selectionCheckBox.clear();
+    this.selection.clear();
+    this.getTransactions();
+  }
 
-  // openDialog(action: string): void{
-  //   if (action === 'Edit' && !this.selection.hasValue()){
-  //     this.us.openSnackBar('Select a job before editing', 'warning');
-  //     return;
-  //   }
-  //   const dialogRef = this.dialog.open(JobFormComponent, {
-  //    data: {
-  //      action,
-  //      data: this.selectedJob
-  //    }
+  hasSameCustomer(array): boolean {
+    const first = array[0];
+    return array.every((element) => {
+        return element.customerId === first.customerId;
+    });
+  }
 
-  //   });
+  hasSameEmployee(array): boolean {
+    const first = array[0];
+    return array.every((element) => {
+        return element.employeeId === first.employeeId;
+    });
+  }
 
-  //   dialogRef.afterClosed().subscribe(job => {
-  //     if (job){
-  //       if (action === 'Edit'){
-  //         this.ts.updateJob(job).subscribe(res => {
-  //           this.getJobs();
-  //           this.us.openSnackBar('Job Updated', 'success');
-  //         });
-  //       }
-  //       else {
-  //         this.ts.addJob(job).subscribe(res => {
-  //           this.getJobs();
-  //           this.us.openSnackBar('Job Added', 'success');
-  //         }, err => console.log(err));
-  //       }
-  //     }
-  //   });
-  // }
+  onRowClicked(row: any): void{
+    this.selectedTransaction = { ...row };
+    this.selection.toggle(row);
+    this.selectionCheckBox.toggle(row);
+  }
 
-  // onRowClicked(row: any): void{
-  //   this.selectedJob = { ...row };
-  //   this.selection.toggle(row);
-  // }
+  isAllSelected(): boolean {
+    const numSelected = this.selectionCheckBox.selected.length;
+    const numRows = this.dataSource.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle(): void {
+    this.isAllSelected() ?
+        this.selectionCheckBox.clear() :
+        this.dataSource.forEach(row => this.selectionCheckBox.select(row));
+  }
+
+ 
 
 }

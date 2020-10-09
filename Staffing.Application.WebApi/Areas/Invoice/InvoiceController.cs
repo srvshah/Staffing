@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Staffing.Application.Model.Invoice;
 using Staffing.Application.Model.Transaction;
 using Staffing.Application.Service.Invoice;
 using Staffing.Application.WebApi.Areas.Base;
@@ -56,6 +57,26 @@ namespace Staffing.Application.WebApi.Areas.Invoice
 
                 throw;
             }
+        }
+
+        [HttpGet]
+        public IActionResult GetInvoiceDetail(MvInvoice invoice)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var jsonString = _invoiceService.GetInvoiceDetail(invoice);
+                return Ok(jsonString);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

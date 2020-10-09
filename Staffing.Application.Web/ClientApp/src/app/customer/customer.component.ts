@@ -33,6 +33,7 @@ export class CustomerComponent implements OnInit {
     this.cs.getCustomers().subscribe(res => {
       if (res && res.data){
         this.dataSource = res.data;
+        this.userMsg = null;
       } else {
         this.dataSource = [];
         this.userMsg = 'No data';
@@ -41,9 +42,13 @@ export class CustomerComponent implements OnInit {
   }
 
   addCustomer(): void{
+    this.clearSelection();
+    this.openDialog('Add');
+  }
+
+  clearSelection(): void{
     this.selection.clear();
     this.selectedCustomer = {} as MvCustomer;
-    this.openDialog('Add');
   }
 
   editCustomer(): void{
@@ -78,6 +83,7 @@ export class CustomerComponent implements OnInit {
           }, err => console.log(err));
         }
       }
+      this.clearSelection();
     });
   }
 

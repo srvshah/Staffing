@@ -1,0 +1,85 @@
+<h1 mat-dialog-title>Invoice</h1>
+
+<div mat-dialog-content>
+    <mat-card style="margin:5px;">
+        <mat-card-header>
+          <mat-card-subtitle>Invoice Details</mat-card-subtitle>
+        </mat-card-header>
+       
+        <mat-card-content>
+          <table class="table">
+            <thead>
+              <tr>
+                  <th>AssignmentId</th>
+                  <th>JobTitle</th>
+                  <th>Employee</th>
+                  <th>HoursWorked</th>
+                  <th>Rate</th>
+                  <th>Total</th>
+              </tr>
+            </thead>
+          
+            <tbody>
+              <tr *ngFor="let id of invoiceDetail">
+                <td>{{id.assignmentId}}</td>
+                <td>{{id.jobTitle}}</td>
+                <td>{{id.employeeName}}</td>
+                <td>{{id.hoursWorked}}</td>
+                <td>{{id.rate}}</td>
+                <td>${{id.amount}}</td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${{total}}</td>
+              </tr>
+            </tfoot>
+
+          </table>
+        </mat-card-content>
+        
+      </mat-card>
+
+      <mat-card style="margin:5px;">
+        <mat-card-header>
+          <mat-card-subtitle>Summary</mat-card-subtitle>
+        </mat-card-header>
+    
+        <mat-card-content>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>InvoiceId</th>
+                <th>Invoice Number</th>
+                <th>Customer</th>
+                <th>Employee</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td>{{invoice.invoiceId}}</td>
+                <td>{{invoice.invoiceNumber}}</td>
+                <td>{{invoice.customerName}}</td>
+                <td>{{invoice.employeeName}}</td>
+                <td>${{invoice.total}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+        </mat-card-content>
+      </mat-card>
+   
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancelClick()" color="warn">Cancel</button>
+  <button (click)="printInvoice()" mat-raised-button color="primary">Print</button>
+</div>

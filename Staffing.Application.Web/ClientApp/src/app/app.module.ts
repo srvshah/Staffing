@@ -12,6 +12,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { JobComponent } from './job/job.component';
 import { AssignmentComponent } from './assignment/assignment.component';
 import { TransactionComponent } from './transaction/transaction.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'transaction',
     loadChildren: () => import('./transaction/transaction.module').then(m => m.TransactionModule),
+  },
+  {
+    path: 'invoice',
+    loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
   }
 ];
 
@@ -54,7 +59,8 @@ const routes: Routes = [
     CustomerComponent,
     JobComponent,
     AssignmentComponent,
-    TransactionComponent
+    TransactionComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule,

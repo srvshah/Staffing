@@ -55,4 +55,4 @@
     <tr (click)='onRowClicked(row)' mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
 
 </table>
-<span *ngIf="userMsg" style="color: red;font-size: medium;font-weight: bold;">No Records!</span>
+<span *ngIf="userMsg" style="color: red;font-size: medium;font-weight: bold;">{{userMsg}}</span>

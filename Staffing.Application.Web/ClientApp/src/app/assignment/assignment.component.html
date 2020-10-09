@@ -1,5 +1,5 @@
 <button mat-raised-button (click)='addAssignment()' style="margin-right: 5px;">Create</button>
-<button mat-raised-button (click)='editAssignment()'>Edit</button>
+<button mat-raised-button (click)='editAssignment()' style="margin-right: 5px;">Edit</button>
 <button mat-raised-button (click)='generateTransaction()'>Generate Transaction</button>
 <br>
 <br>
@@ -51,4 +51,4 @@
     <tr (click)='onRowClicked(row)' mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></tr>
 
 </table>
-<span *ngIf="userMsg" style="color: red;font-size: medium;font-weight: bold;">No Records!</span>
+<span *ngIf="userMsg" style="color: red;font-size: medium;font-weight: bold;">{{userMsg}}</span>

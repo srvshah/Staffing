@@ -31,6 +31,7 @@ export class JobComponent implements OnInit {
     this.js.getJobs().subscribe(res => {
       if (res && res.data){
         this.dataSource = res.data;
+        this.userMsg = null;
       } else {
         this.dataSource = [];
         this.userMsg = 'No data';
@@ -39,9 +40,13 @@ export class JobComponent implements OnInit {
   }
 
   addJob(): void{
+    this.clearSelection();
+    this.openDialog('Add');
+  }
+
+  clearSelection(): void{
     this.selection.clear();
     this.selectedJob = {} as MvJob;
-    this.openDialog('Add');
   }
 
   editJob(): void{
@@ -76,6 +81,7 @@ export class JobComponent implements OnInit {
           }, err => console.log(err));
         }
       }
+      this.clearSelection();
     });
   }
 

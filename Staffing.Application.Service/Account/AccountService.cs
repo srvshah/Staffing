@@ -33,7 +33,7 @@ namespace Staffing.Application.Service.Account
         {
             using (var conn = _dah.GetConnection())
             {
-                using (var cmd = new SqlCommand("SpAllPersonDetailSel", conn))
+                using (var cmd = new SqlCommand("SpPersonSel", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = int.Parse(_commandTimeout);
@@ -61,7 +61,7 @@ namespace Staffing.Application.Service.Account
         {
             using (var conn = _dah.GetConnection())
             {
-                using (var cmd = new SqlCommand("SpPersonSel", conn))
+                using (var cmd = new SqlCommand("SpPersonLoginSel", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@Username", login.Username));

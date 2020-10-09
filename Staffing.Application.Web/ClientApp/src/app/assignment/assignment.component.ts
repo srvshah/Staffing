@@ -35,6 +35,7 @@ export class AssignmentComponent implements OnInit {
     this.as.getAssignments().subscribe(res => {
       if (res && res.data){
         this.dataSource = res.data;
+        this.userMsg = null;
       } else {
         this.dataSource = [];
         this.userMsg = 'No data';
@@ -43,8 +44,7 @@ export class AssignmentComponent implements OnInit {
   }
 
   addAssignment(): void{
-    this.selection.clear();
-    this.selectedAssignment = {} as MvAssignment;
+    this.clearSelection();
     this.openDialog('Add');
   }
 
@@ -80,9 +80,14 @@ export class AssignmentComponent implements OnInit {
           }, err => console.log(err));
         }
       }
-      this.selectionCheckBox.clear();
-      this.selection.clear();
+      this.clearSelection();
     });
+  }
+
+  clearSelection(): void{
+    this.selectionCheckBox.clear();
+    this.selectionCheckBox.clear();
+    this.selection.clear();
   }
 
   onRowClicked(row: any): void{
@@ -103,7 +108,7 @@ export class AssignmentComponent implements OnInit {
         this.dataSource.forEach(row => this.selectionCheckBox.select(row));
   }
 
-  generateTransaction(){
+  generateTransaction(): void{
     if (!this.selectionCheckBox.hasValue()){
       this.us.openSnackBar('Select assignment to generate transaction', 'warning');
     }
@@ -116,8 +121,10 @@ export class AssignmentComponent implements OnInit {
       }
       else {
         this.ts.addTransaction(this.selectionCheckBox.selected).subscribe(res => {
-          console.log(res);
           this.us.openSnackBar('Transaction Generated', 'success');
+          this.selectionCheckBox.clear();
+          this.selection.clear();
+          this.getAssignments();
         }, err => console.log(err));
       }
     }

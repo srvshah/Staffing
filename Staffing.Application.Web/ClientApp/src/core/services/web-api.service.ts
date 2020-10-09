@@ -22,8 +22,4 @@ export class WebApiService {
     return this.http.post(this.apiUrl + url, body);
   }
 
-  put(url: string, body: any): Observable<any>{
-    return this.http.put(this.apiUrl + url, body);
-  }
-
 }
